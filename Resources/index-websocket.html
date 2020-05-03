@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>POC WebSocket</title>
+  </head>
+  <body>
+    <h1>POC WebSocket</h1>
+    <div>
+      <p id="question">Loading…</p>
+      <div>
+        <form id="answering-form">
+          <label for="answer">Answer:</label>
+          <input type="text" id="answer" name="answer" />
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
+      <p id="answer-message"></p>
+      <p id="error" style="color: red;"></p>
+    </div>
+    <script>
+      console.log("🎉 Welcome to the WebSocket POC.");
+      window.onload = function () {
+        webSocket = new WebSocket("ws://localhost:8080/quiz");
+
+        window.onbeforeunload = function(event) {
+          webSocket.close()          
+        }
+
+        webSocket.onopen = function (event) {
+          document.getElementById("answering-form").onsubmit = function (e) {
+            e.preventDefault();
+            webSocket.send(document.getElementById("answer").value);
+          };
+        };
+
+        webSocket.onmessage = function (event) {
+          document.getElementById("question").innerHTML = event.data;
+        };
+
+        webSocket.onerror = function (event, args) {
+          document.getElementById("error").innerHTML =
+            "An error happened. Check console.";
+        };
+
+        webSocket.onclose = function (event) {
+          document.getElementById("error").innerHTML =
+            "The websocket was closed.";
+        };
+      };
+    </script>
+  </body>
+</html>

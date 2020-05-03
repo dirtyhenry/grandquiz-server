@@ -1,0 +1,2 @@
+open:
+	open Package.swift

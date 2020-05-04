@@ -18,4 +18,7 @@ func routes(_ app: Application) throws {
         quizController.start()
         print("Number of players: \(quizControllers.count)")
     }
+    
+    let roomController = RoomController()
+    app.post("quiz", "new", use: roomController.create)
 }

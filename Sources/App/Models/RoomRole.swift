@@ -7,6 +7,10 @@ struct QuizRoomRole: Content {
     static func createMasterOfCeremony() -> QuizRoomRole {
         return QuizRoomRole(role: .masterOfCeremony, roomIdentifier: UUID().uuidString)
     }
+    
+    static func createPlayer(roomIdentifier: String) -> QuizRoomRole {
+        return QuizRoomRole(role: .player, roomIdentifier: roomIdentifier)
+    }
 }
 
 enum QuizRole: String, Codable {

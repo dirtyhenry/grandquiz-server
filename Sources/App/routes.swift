@@ -21,4 +21,5 @@ func routes(_ app: Application) throws {
     
     let roomController = RoomController()
     app.post("quiz", "new", use: roomController.create)
+    app.put("quiz", "join", ":roomIdentifier", use: roomController.join)
 }
